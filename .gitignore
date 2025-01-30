@@ -113,3 +113,4 @@ appsettings.Development.json
 appsettings.Production.json
 *.csv
 *.html 
+secrets.json

@@ -5,6 +5,7 @@ using MailingService.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Configuration.AddJsonFile("secrets.json", optional: true, reloadOnChange: true);
 
 // Add services to the container
 builder.Services.AddControllers();

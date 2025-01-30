@@ -1,13 +1,11 @@
-using System;
-using System.Threading.Tasks;
+using System.Net;
+using System.Net.Mail;
+using MailingService.Domain.Entities;
 using MailingService.Domain.Interfaces;
 using MailingService.Domain.Settings;
-using Microsoft.Extensions.Options;
-using System.Net.Mail;
-using System.Net;
-using Microsoft.EntityFrameworkCore;
-using MailingService.Domain.Entities;
 using MailingService.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace MailingService.Application.Services
 {

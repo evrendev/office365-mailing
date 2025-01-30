@@ -1,5 +1,3 @@
-using System;
-
 namespace MailingService.Domain.Entities
 {
     public class EmailTracker

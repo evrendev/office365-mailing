@@ -1,14 +1,9 @@
-using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
+using CsvHelper;
 using MailingService.Domain.Interfaces;
 using MailingService.Domain.Settings;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using System.Threading.Tasks;
-using System;
-using System.IO;
-using CsvHelper;
-using System.Globalization;
-using System.Linq;
-using System.Collections.Generic;
 
 namespace MailingService.Api.Controllers
 {
@@ -21,8 +16,8 @@ namespace MailingService.Api.Controllers
 
         public class EmailRecipient
         {
-            public string Email { get; set; }
-            public string Name { get; set; }
+            public string? Email { get; set; }
+            public string? Name { get; set; }
         }
 
         public EmailController(IEmailService emailService, IOptions<MailSettings> mailSettings)

@@ -1,8 +1,8 @@
-using Microsoft.EntityFrameworkCore;
-using MailingService.Domain.Settings;
-using MailingService.Domain.Interfaces;
 using MailingService.Application.Services;
+using MailingService.Domain.Interfaces;
+using MailingService.Domain.Settings;
 using MailingService.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 

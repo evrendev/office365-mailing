@@ -20,7 +20,7 @@ namespace MailingService.Application.Services
             _context = context;
         }
 
-        public async Task<bool> SendEmailAsync(string to, string subject, string htmlContent)
+        public async Task<bool> SendEmailAsync(string? to, string? subject, string? htmlContent)
         {
             try
             {
@@ -31,10 +31,10 @@ namespace MailingService.Application.Services
                 }
 
                 using var message = new MailMessage();
-                message.From = new MailAddress(_mailSettings.FromEmail, _mailSettings.FromName);
-                message.To.Add(to);
-                message.Subject = subject;
-                message.Body = htmlContent;
+                message.From = new MailAddress(_mailSettings.FromEmail ?? "help@help-dunya.org", _mailSettings.FromName ?? "Help Dunya");
+                message.To.Add(to ?? "help@help-dunya.org");
+                message.Subject = subject ?? "Test Subject";
+                message.Body = htmlContent ?? "Test Body";
                 message.IsBodyHtml = true;
 
                 using var client = new SmtpClient(_mailSettings.SmtpServer, _mailSettings.SmtpPort);
@@ -57,7 +57,7 @@ namespace MailingService.Application.Services
                 .CountAsync(x => x.SentDate.Date == today && x.IsSuccessful);
         }
 
-        public async Task<bool> HasEmailBeenSentAsync(string email, string templateId)
+        public async Task<bool> HasEmailBeenSentAsync(string? email, string? templateId)
         {
             return await _context.EmailTrackers
                 .AnyAsync(x => x.RecipientEmail == email &&
@@ -65,7 +65,7 @@ namespace MailingService.Application.Services
                               x.IsSuccessful);
         }
 
-        public async Task TrackEmailSentAsync(string email, string templateId, bool isSuccessful, string errorMessage = null)
+        public async Task TrackEmailSentAsync(string? email, string? templateId, bool isSuccessful, string? errorMessage = null)
         {
             var tracker = new EmailTracker
             {

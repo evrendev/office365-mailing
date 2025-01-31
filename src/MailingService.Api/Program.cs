@@ -15,6 +15,10 @@ builder.Services.AddSwaggerGen();
 // Configure settings
 builder.Services.Configure<MailSettings>(
     builder.Configuration.GetSection("MailSettings"));
+builder.Services.Configure<RateLimitSettings>(settings =>
+{
+    settings.DailyEmailLimit = builder.Configuration.GetSection("MailSettings:DailyEmailLimit").Get<int>();
+});
 
 // Add DbContext
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -22,6 +26,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
         builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Register services
+builder.Services.AddSingleton<IRateLimiterService, RateLimiterService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 
 // Add CORS

@@ -13,11 +13,16 @@ namespace MailingService.Application.Services
     {
         private readonly MailSettings _mailSettings;
         private readonly ApplicationDbContext _context;
+        private readonly IRateLimiterService _rateLimiter;
 
-        public EmailService(IOptions<MailSettings> mailSettings, ApplicationDbContext context)
+        public EmailService(
+            IOptions<MailSettings> mailSettings,
+            ApplicationDbContext context,
+            IRateLimiterService rateLimiter)
         {
             _mailSettings = mailSettings.Value;
             _context = context;
+            _rateLimiter = rateLimiter;
         }
 
         public async Task<bool> SendEmailAsync(string? to, string? subject, string? htmlContent)
@@ -29,6 +34,9 @@ namespace MailingService.Application.Services
                 {
                     throw new Exception("Daily email limit reached");
                 }
+
+                // Wait for the next available slot based on rate limiting
+                await _rateLimiter.WaitForNextSlotAsync();
 
                 using var message = new MailMessage();
                 message.From = new MailAddress(_mailSettings.FromEmail ?? "help@help-dunya.org", _mailSettings.FromName ?? "Help Dunya");
